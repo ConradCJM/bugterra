@@ -70,13 +70,13 @@
           <mxGeometry height="80" width="120" x="-321" y="366" as="geometry" />
         </mxCell>
         <mxCell id="FUIms9LGi32ikloTW9Qt-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Update Bug Information" vertex="1">
-          <mxGeometry height="80" width="120" x="-156" y="392" as="geometry" />
+          <mxGeometry height="80" width="120" x="-182" y="344" as="geometry" />
         </mxCell>
         <mxCell id="FUIms9LGi32ikloTW9Qt-9" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="View Comments" vertex="1">
           <mxGeometry height="80" width="120" x="-334" y="489" as="geometry" />
         </mxCell>
         <mxCell id="FUIms9LGi32ikloTW9Qt-10" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="View Uploaded Media" vertex="1">
-          <mxGeometry height="80" width="120" x="-149" y="483" as="geometry" />
+          <mxGeometry height="80" width="120" x="-170" y="450" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
