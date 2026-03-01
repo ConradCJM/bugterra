@@ -8,7 +8,7 @@
           <mxGeometry height="116" width="72" x="-43" y="174" as="geometry" />
         </mxCell>
         <mxCell id="mwhMrVV9h1ZUoWPABbq1-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;connectable=0;allowArrows=0;" value="" vertex="1">
-          <mxGeometry height="651" width="1129" x="81" y="23" as="geometry" />
+          <mxGeometry height="651" width="954" x="81" y="23" as="geometry" />
         </mxCell>
         <mxCell id="mwhMrVV9h1ZUoWPABbq1-3" parent="1" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" value="Bug Tracking System" vertex="1">
           <mxGeometry height="30" width="177" x="81" y="-7" as="geometry" />
