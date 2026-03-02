@@ -315,7 +315,7 @@
         <mxCell id="m5J3y3CPcg2YNbQqJoxi-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Add developer to team" vertex="1">
           <mxGeometry height="60" width="106" x="384" y="590" as="geometry" />
         </mxCell>
-        <mxCell id="m5J3y3CPcg2YNbQqJoxi-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Remove developer to team" vertex="1">
+        <mxCell id="m5J3y3CPcg2YNbQqJoxi-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Remove developer from team" vertex="1">
           <mxGeometry height="60" width="106" x="384" y="670" as="geometry" />
         </mxCell>
         <mxCell id="m5J3y3CPcg2YNbQqJoxi-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="View Developer&lt;div&gt;team&lt;/div&gt;" vertex="1">
