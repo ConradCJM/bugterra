@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BugTracker - Bug Management System",
+  title: "BugTerra - Bug Management System",
   description: "A comprehensive bug tracking and management system",
 };
 
