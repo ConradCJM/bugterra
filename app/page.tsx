@@ -18,10 +18,10 @@ export default function Home() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link
-              href="/dashboard"
-              className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg transition-colors"
+              href="/signin"
+              className="inline-flex items-center justify-center gap-2 bg-slate-600 hover:bg-slate-700 text-white font-semibold px-8 py-3 rounded-lg transition-colors"
             >
-              Go to Dashboard
+              Sign In
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -37,10 +37,10 @@ export default function Home() {
               </svg>
             </Link>
             <Link
-              href="/report-bug"
-              className="inline-flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-600 text-white font-semibold px-8 py-3 rounded-lg transition-colors"
+              href="/signup"
+              className="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3 rounded-lg transition-colors"
             >
-              Report a Bug
+              Sign Up
               <svg
                 className="w-5 h-5"
                 fill="none"

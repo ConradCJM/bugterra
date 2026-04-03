@@ -22,7 +22,7 @@ export default function Navigation() {
           </div>
 
           {/* Nav Links */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex space-x-8 items-center">
             <Link
               href="/"
               className={`transition-colors ${
@@ -33,25 +33,21 @@ export default function Navigation() {
             >
               Home
             </Link>
+          </div>
+
+          {/* Auth Buttons */}
+          <div className="hidden md:flex gap-3">
             <Link
-              href="/dashboard"
-              className={`transition-colors ${
-                isActive("/dashboard")
-                  ? "text-blue-400 border-b-2 border-blue-400"
-                  : "text-slate-300 hover:text-white"
-              } pb-2`}
+              href="/signin"
+              className="text-slate-300 hover:text-white font-semibold py-2 px-4 rounded transition-colors"
             >
-              Dashboard
+              Sign In
             </Link>
             <Link
-              href="/report-bug"
-              className={`transition-colors ${
-                isActive("/report-bug")
-                  ? "text-blue-400 border-b-2 border-blue-400"
-                  : "text-slate-300 hover:text-white"
-              } pb-2`}
+              href="/signup"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-colors"
             >
-              Report Bug
+              Sign Up
             </Link>
           </div>
 
@@ -94,26 +90,18 @@ export default function Navigation() {
               Home
             </Link>
             <Link
-              href="/dashboard"
-              className={`block py-2 px-4 rounded transition-colors ${
-                isActive("/dashboard")
-                  ? "bg-blue-500 text-white"
-                  : "text-slate-300 hover:bg-slate-700 hover:text-white"
-              }`}
+              href="/signin"
+              className="block py-2 px-4 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              Dashboard
+              Sign In
             </Link>
             <Link
-              href="/report-bug"
-              className={`block py-2 px-4 rounded transition-colors ${
-                isActive("/report-bug")
-                  ? "bg-blue-500 text-white"
-                  : "text-slate-300 hover:bg-slate-700 hover:text-white"
-              }`}
+              href="/signup"
+              className="block py-2 px-4 rounded bg-blue-600 hover:bg-blue-700 text-white transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              Report Bug
+              Sign Up
             </Link>
           </div>
         )}
