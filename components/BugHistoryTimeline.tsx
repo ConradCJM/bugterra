@@ -72,7 +72,7 @@ export default function BugHistoryTimeline({ history }: { history: BugHistory[] 
                       {config.label}
                     </span>
                     <span className="text-xs text-slate-500 font-medium">
-                      {formatTimestamp(entry.timestamp)}
+                      {formatTimestamp(entry.timestamp)} • {new Date(entry.timestamp).toISOString().split('T')[0]}
                     </span>
                   </div>
 
