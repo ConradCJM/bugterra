@@ -11,6 +11,7 @@ interface Bug {
   status: string;
   reporter: string;
   createdAt: string;
+  assignee?: string;
 }
 
 const PRIORITY_COLORS = {
@@ -65,6 +66,9 @@ export default function BugCard({ bug }: { bug: Bug }) {
         <div className="text-xs text-slate-500 space-y-1 border-t border-slate-100 pt-2">
           <p className="line-clamp-1">
             <span className="font-medium">Reporter:</span> {bug.reporter}
+          </p>
+          <p className="line-clamp-1">
+            <span className="font-medium">Assigned to:</span> {bug.assignee || "Not Assigned"}
           </p>
           <p>
             <span className="font-medium">Date:</span> {bug.createdAt}
