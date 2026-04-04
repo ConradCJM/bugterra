@@ -2,42 +2,9 @@
 
 import { useState, useRef, useEffect } from "react";
 import BugHistoryTimeline from "./BugHistoryTimeline";
-
-interface BugHistory {
-  id: string;
-  bugId: string;
-  timestamp: string;
-  actor: string;
-  actionType: string;
-  fieldName?: string;
-  oldValue?: string;
-  newValue?: string;
-  description: string;
-}
-
-interface Bug {
-  id: string;
-  name: string;
-  category: string;
-  priority: "low" | "medium" | "high" | "critical";
-  status: "todo" | "in-progress" | "review" | "done";
-  reporter: string;
-  createdAt: string;
-  history?: BugHistory[];
-}
-
-interface Attachment {
-  id: string;
-  file: File;
-  url: string;
-  type: "image" | "video";
-}
-
-interface Comment {
-  id: string;
-  text: string;
-  timestamp: string;
-}
+import { Attachment } from "@/app/types/attachment";
+import { Comment } from "@/app/types/comment";
+import { BugDetailsModalProps } from "@/app/types/bugDetailsModalProps";
 
 const PRIORITY_COLORS = {
   low: "bg-green-100 text-green-800 border-green-300",
@@ -52,12 +19,6 @@ const STATUS_COLORS = {
   "review": "bg-yellow-100 text-yellow-800",
   "done": "bg-green-100 text-green-800",
 };
-
-interface BugDetailsModalProps {
-  bug: Bug;
-  isOpen: boolean;
-  onClose: () => void;
-}
 
 type ResizeHandle = "nw" | "ne" | "sw" | "se" | "n" | "s" | "e" | "w" | null;
 
