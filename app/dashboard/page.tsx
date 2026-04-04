@@ -4,6 +4,20 @@ import { useState } from "react";
 import BugCard from "@/components/BugCard";
 import RecentBugsSection from "@/components/RecentBugsSection";
 import BugDetailsModal from "@/components/BugDetailsModal";
+import { useAuth } from "@/context/AuthContext";
+
+interface Comment {
+  id: string;
+  text: string;
+  timestamp: string;
+}
+
+interface Attachment {
+  id: string;
+  fileName: string;
+  fileType: string;
+  uploadedAt: string;
+}
 
 interface Bug {
   id: string;
@@ -13,7 +27,10 @@ interface Bug {
   status: "todo" | "in-progress" | "review" | "done";
   reporter: string;
   createdAt: string;
+  assignee?: string;
   history?: BugHistory[];
+  comments?: Comment[];
+  attachments?: Attachment[];
 }
 
 interface BugHistory {
@@ -38,6 +55,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "in-progress",
     reporter: "John Doe",
     createdAt: "2026-03-29",
+    assignee: "John Doe",
     history: [
       {
         id: "h1",
@@ -95,6 +113,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "todo",
     reporter: "Jane Smith",
     createdAt: "2026-03-28",
+    assignee: "Jane Smith",
     history: [
       {
         id: "h6",
@@ -122,8 +141,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "review",
     reporter: "Mike Johnson",
     createdAt: "2026-03-27",
-    history: [
-      {
+    assignee: "Mike Johnson",    history: [      {
         id: "h8",
         bugId: "3",
         timestamp: "2026-03-27T11:00:00Z",
@@ -152,6 +170,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "done",
     reporter: "Sarah Lee",
     createdAt: "2026-03-26",
+    assignee: "Emma Wilson",
     history: [
       {
         id: "h10",
@@ -190,6 +209,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "todo",
     reporter: "John Doe",
     createdAt: "2026-03-25",
+    assignee: "Jane Smith",
     history: [
       {
         id: "h13",
@@ -209,6 +229,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "in-progress",
     reporter: "Mike Johnson",
     createdAt: "2026-03-24",
+    assignee: "Jane Smith",
     history: [
       {
         id: "h14",
@@ -247,6 +268,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "todo",
     reporter: "Alex Chen",
     createdAt: "2026-03-23",
+    assignee: "Alex Chen",
     history: [
       {
         id: "h17",
@@ -277,6 +299,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "in-progress",
     reporter: "Emma Wilson",
     createdAt: "2026-03-22",
+    assignee: "Emma Wilson",
     history: [
       {
         id: "h19",
@@ -391,6 +414,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "review",
     reporter: "Emma Wilson",
     createdAt: "2026-03-18",
+    assignee: "Alex Chen",
     history: [
       {
         id: "h27",
@@ -420,8 +444,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     priority: "high",
     status: "in-progress",
     reporter: "Jane Smith",
-    createdAt: "2026-03-17",
-    history: [
+    createdAt: "2026-03-17",    assignee: "Mike Johnson",    history: [
       {
         id: "h29",
         bugId: "13",
@@ -499,8 +522,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     priority: "low",
     status: "done",
     reporter: "Mike Johnson",
-    createdAt: "2026-03-15",
-    history: [
+    createdAt: "2026-03-15",    assignee: "Emma Wilson",    history: [
       {
         id: "h35",
         bugId: "15",
@@ -546,7 +568,10 @@ const CATEGORY_FILTERS = [
   { value: "Database", label: "Database", color: "bg-indigo-100 text-indigo-800 border-indigo-300 hover:bg-indigo-200" },
 ];
 
+const TEAM_MEMBERS = ["John Doe", "Jane Smith", "Mike Johnson", "Emma Wilson", "Alex Chen"];
+
 export default function Dashboard() {
+  const { currentUser } = useAuth();
   const [bugs, setBugs] = useState<Bug[]>(PLACEHOLDER_BUGS);
   const [selectedBug, setSelectedBug] = useState<Bug | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -555,10 +580,16 @@ export default function Dashboard() {
   const [isPriorityDropdownOpen, setIsPriorityDropdownOpen] = useState(false);
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showAssignedToYou, setShowAssignedToYou] = useState(false);
 
   const handleBugClick = (bug: Bug) => {
     setSelectedBug(bug);
     setIsDetailsOpen(true);
+  };
+
+  const handleBugUpdate = (updatedBug: Bug) => {
+    setBugs((prev) => prev.map((b) => (b.id === updatedBug.id ? updatedBug : b)));
+    setSelectedBug(updatedBug);
   };
 
   const togglePriority = (priority: string) => {
@@ -586,7 +617,8 @@ export default function Dashboard() {
         bug.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         bug.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
         bug.reporter.toLowerCase().includes(searchQuery.toLowerCase());
-      return statusMatch && priorityMatch && categoryMatch && searchMatch;
+      const assignedMatch = !showAssignedToYou || bug.assignee === currentUser;
+      return statusMatch && priorityMatch && categoryMatch && searchMatch && assignedMatch;
     });
   };
 
@@ -674,6 +706,18 @@ export default function Dashboard() {
                 )}
               </div>
 
+              {/* Assigned to You Toggle */}
+              <button
+                onClick={() => setShowAssignedToYou(!showAssignedToYou)}
+                className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
+                  showAssignedToYou
+                    ? "bg-blue-600 hover:bg-blue-700 text-white"
+                    : "bg-slate-700 hover:bg-slate-600 text-white"
+                }`}
+              >
+                {showAssignedToYou ? "✓ Assigned to You" : "Assigned to You"}
+              </button>
+
               {/* Active Filters Display */}
               {(selectedPriorities.length > 0 || selectedCategories.length > 0) && (
                 <div className="flex flex-wrap gap-2 items-center">
@@ -747,6 +791,7 @@ export default function Dashboard() {
           bug={selectedBug as Bug & { status: "todo" | "in-progress" | "review" | "done" }}
           isOpen={isDetailsOpen}
           onClose={() => setIsDetailsOpen(false)}
+          onBugUpdate={handleBugUpdate}
         />
       )}
     </div>
