@@ -55,6 +55,12 @@ export default function RecentBugsSection({ bugs, onBugClick }: RecentBugsSectio
                     <span>{bug.category}</span>
                     <span>•</span>
                     <span>Reported by {bug.reporter}</span>
+                    {bug.assignee && (
+                      <>
+                        <span>•</span>
+                        <span>Assigned to {bug.assignee}</span>
+                      </>
+                    )}
                     <span>•</span>
                     <span>{bug.createdAt}</span>
                   </div>

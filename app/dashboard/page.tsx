@@ -17,6 +17,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "in-progress",
     reporter: "John Doe",
     createdAt: "2026-03-29",
+    assignee: "Jane Smith",
     history: [
       {
         id: "h1",
@@ -74,6 +75,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "todo",
     reporter: "Jane Smith",
     createdAt: "2026-03-28",
+    assignee: "Mike Johnson",
     history: [
       {
         id: "h6",
@@ -101,6 +103,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "review",
     reporter: "Mike Johnson",
     createdAt: "2026-03-27",
+    assignee: "Emma Wilson",
     history: [
       {
         id: "h8",
@@ -131,6 +134,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "done",
     reporter: "Sarah Lee",
     createdAt: "2026-03-26",
+    assignee: "John Doe",
     history: [
       {
         id: "h10",
@@ -188,6 +192,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "in-progress",
     reporter: "Mike Johnson",
     createdAt: "2026-03-24",
+    assignee: "Sarah Lee",
     history: [
       {
         id: "h14",
@@ -540,6 +545,13 @@ export default function Dashboard() {
     setIsDetailsOpen(true);
   };
 
+  const handleBugUpdate = (updatedBug: Bug) => {
+    setBugs((prevBugs) =>
+      prevBugs.map((bug) => (bug.id === updatedBug.id ? updatedBug : bug))
+    );
+    setSelectedBug(updatedBug);
+  };
+
   const togglePriority = (priority: string) => {
     setSelectedPriorities((prev) =>
       prev.includes(priority)
@@ -706,7 +718,7 @@ export default function Dashboard() {
                 <div className="p-4 space-y-3 max-h-96 overflow-y-auto">
                   {getBugsByStatus(column.id).length > 0 ? (
                     getBugsByStatus(column.id).map((bug) => (
-                      <BugCard key={bug.id} bug={bug} />
+                      <BugCard key={bug.id} bug={bug} onBugUpdate={handleBugUpdate} />
                     ))
                   ) : (
                     <div className="flex items-center justify-center h-32 text-slate-500">
@@ -726,6 +738,7 @@ export default function Dashboard() {
           bug={selectedBug as Bug & { status: "todo" | "in-progress" | "review" | "done" }}
           isOpen={isDetailsOpen}
           onClose={() => setIsDetailsOpen(false)}
+          onBugUpdate={handleBugUpdate}
         />
       )}
     </div>

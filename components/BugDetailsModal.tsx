@@ -2,9 +2,12 @@
 
 import { useState, useRef, useEffect } from "react";
 import BugHistoryTimeline from "./BugHistoryTimeline";
+import StatusChangeForm from "./StatusChangeForm";
+import AssignBugForm from "./AssignBugForm";
 import { Attachment } from "@/app/types/attachment";
 import { Comment } from "@/app/types/comment";
 import { BugDetailsModalProps } from "@/app/types/bugDetailsModalProps";
+import { Bug } from "@/app/types/bug";
 
 const PRIORITY_COLORS = {
   low: "bg-green-100 text-green-800 border-green-300",
@@ -26,7 +29,9 @@ export default function BugDetailsModal({
   bug,
   isOpen,
   onClose,
+  onBugUpdate,
 }: BugDetailsModalProps) {
+  const [bugData, setBugData] = useState<Bug>(bug);
   const [width, setWidth] = useState(600);
   const [height, setHeight] = useState(500);
   const [isResizing, setIsResizing] = useState<ResizeHandle>(null);
@@ -34,6 +39,8 @@ export default function BugDetailsModal({
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState<Comment[]>([]);
   const [activeTab, setActiveTab] = useState<"details" | "history">("details");
+  const [showStatusForm, setShowStatusForm] = useState(false);
+  const [showAssignForm, setShowAssignForm] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -93,6 +100,26 @@ export default function BugDetailsModal({
       setComments((prev) => [...prev, newComment]);
       console.log("Comment submitted:", comment);
       setComment("");
+    }
+  };
+
+  const handleStatusChange = (updatedFields: Partial<Bug>) => {
+    const updatedBug = { ...bugData, ...updatedFields };
+    setBugData(updatedBug);
+    setShowStatusForm(false);
+    console.log("Bug updated:", updatedBug);
+    if (onBugUpdate) {
+      onBugUpdate(updatedBug);
+    }
+  };
+
+  const handleAssignBug = (assignee: string | undefined) => {
+    const updatedBug = { ...bugData, assignee };
+    setBugData(updatedBug);
+    setShowAssignForm(false);
+    console.log("Bug assigned to:", assignee || "Unassigned");
+    if (onBugUpdate) {
+      onBugUpdate(updatedBug);
     }
   };
 
@@ -305,22 +332,27 @@ export default function BugDetailsModal({
             <div className="flex flex-wrap gap-3 mb-6">
               <span
                 className={`text-xs font-semibold px-3 py-1 rounded-full border ${
-                  PRIORITY_COLORS[bug.priority]
+                  PRIORITY_COLORS[bugData.priority]
                 }`}
               >
-                {bug.priority.charAt(0).toUpperCase() + bug.priority.slice(1)}{" "}
+                {bugData.priority.charAt(0).toUpperCase() + bugData.priority.slice(1)}{" "}
                 Priority
               </span>
               <span
                 className={`text-xs font-semibold px-3 py-1 rounded-full ${
-                  STATUS_COLORS[bug.status as keyof typeof STATUS_COLORS]
+                  STATUS_COLORS[bugData.status as keyof typeof STATUS_COLORS]
                 }`}
               >
-                {bug.status.replace("-", " ").toUpperCase()}
+                {bugData.status.replace("-", " ").toUpperCase()}
               </span>
               <span className="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-100 text-indigo-800">
-                {bug.category}
+                {bugData.category}
               </span>
+              {bugData.assignee && (
+                <span className="text-xs font-semibold px-3 py-1 rounded-full bg-purple-100 text-purple-800">
+                  👤 {bugData.assignee}
+                </span>
+              )}
             </div>
 
             {/* Details Grid */}
@@ -330,7 +362,7 @@ export default function BugDetailsModal({
                 <label className="block text-sm font-semibold text-slate-700 mb-2">
                   Reported By
                 </label>
-                <p className="text-slate-600">{bug.reporter}</p>
+                <p className="text-slate-600">{bugData.reporter}</p>
               </div>
 
               {/* Date */}
@@ -338,7 +370,7 @@ export default function BugDetailsModal({
                 <label className="block text-sm font-semibold text-slate-700 mb-2">
                   Created Date
                 </label>
-                <p className="text-slate-600">{bug.createdAt}</p>
+                <p className="text-slate-600">{bugData.createdAt}</p>
               </div>
 
               {/* Category */}
@@ -346,7 +378,7 @@ export default function BugDetailsModal({
                 <label className="block text-sm font-semibold text-slate-700 mb-2">
                   Category
                 </label>
-                <p className="text-slate-600">{bug.category}</p>
+                <p className="text-slate-600">{bugData.category}</p>
               </div>
 
               {/* Priority */}
@@ -354,7 +386,23 @@ export default function BugDetailsModal({
                 <label className="block text-sm font-semibold text-slate-700 mb-2">
                   Priority Level
                 </label>
-                <p className="text-slate-600 capitalize">{bug.priority}</p>
+                <p className="text-slate-600 capitalize">{bugData.priority}</p>
+              </div>
+
+              {/* Status */}
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                  Status
+                </label>
+                <p className="text-slate-600 capitalize">{bugData.status.replace("-", " ")}</p>
+              </div>
+
+              {/* Assignee */}
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                  Assigned To
+                </label>
+                <p className="text-slate-600">{bugData.assignee || "Unassigned"}</p>
               </div>
             </div>
 
@@ -486,8 +534,17 @@ export default function BugDetailsModal({
 
           {/* Action Buttons - Always Visible */}
           <div className="flex gap-3 border-t border-slate-200 px-6 py-4 bg-slate-50 flex-shrink-0">
-            <button className="flex-1 bg-slate-600 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded transition-colors text-sm">
+            <button
+              onClick={() => setShowStatusForm(true)}
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-colors text-sm"
+            >
               Change Status
+            </button>
+            <button
+              onClick={() => setShowAssignForm(true)}
+              className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition-colors text-sm"
+            >
+              Assign
             </button>
             <button
               onClick={onClose}
@@ -498,6 +555,24 @@ export default function BugDetailsModal({
           </div>
         </div>
       </div>
+
+      {/* Status Change Form Modal */}
+      {showStatusForm && (
+        <StatusChangeForm
+          bug={bugData}
+          onSave={handleStatusChange}
+          onCancel={() => setShowStatusForm(false)}
+        />
+      )}
+
+      {/* Assign Bug Form Modal */}
+      {showAssignForm && (
+        <AssignBugForm
+          bug={bugData}
+          onSave={handleAssignBug}
+          onCancel={() => setShowAssignForm(false)}
+        />
+      )}
     </>
   );
 }
