@@ -30,20 +30,6 @@ export default function Navigation() {
             </Link>
           </div>
 
-          {/* Nav Links */}
-          <div className="hidden md:flex space-x-8 items-center">
-            <Link
-              href="/"
-              className={`transition-colors ${
-                isActive("/")
-                  ? "text-blue-400 border-b-2 border-blue-400"
-                  : "text-slate-300 hover:text-white"
-              } pb-2`}
-            >
-              Home
-            </Link>
-          </div>
-
           {/* Auth/Dashboard Buttons */}
           <div className="hidden md:flex gap-3">
             {isAuthenticated ? (
