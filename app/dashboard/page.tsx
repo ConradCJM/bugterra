@@ -17,6 +17,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "in-progress",
     reporter: "John Doe",
     createdAt: "2026-03-29",
+    assignee: "Jane Smith",
     history: [
       {
         id: "h1",
@@ -74,6 +75,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "todo",
     reporter: "Jane Smith",
     createdAt: "2026-03-28",
+    assignee: "Mike Johnson",
     history: [
       {
         id: "h6",
@@ -101,6 +103,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "review",
     reporter: "Mike Johnson",
     createdAt: "2026-03-27",
+    assignee: "Emma Wilson",
     history: [
       {
         id: "h8",
@@ -131,6 +134,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "done",
     reporter: "Sarah Lee",
     createdAt: "2026-03-26",
+    assignee: "John Doe",
     history: [
       {
         id: "h10",
@@ -188,6 +192,7 @@ const PLACEHOLDER_BUGS: Bug[] = [
     status: "in-progress",
     reporter: "Mike Johnson",
     createdAt: "2026-03-24",
+    assignee: "Sarah Lee",
     history: [
       {
         id: "h14",
