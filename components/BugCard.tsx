@@ -2,16 +2,8 @@
 
 import { useState } from "react";
 import BugDetailsModal from "./BugDetailsModal";
+import { Bug } from "@/app/types/bug";
 
-interface Bug {
-  id: string;
-  name: string;
-  category: string;
-  priority: "low" | "medium" | "high" | "critical";
-  status: string;
-  reporter: string;
-  createdAt: string;
-}
 
 const PRIORITY_COLORS = {
   low: "bg-green-100 text-green-800 border-green-300",

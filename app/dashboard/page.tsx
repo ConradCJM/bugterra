@@ -4,29 +4,8 @@ import { useState } from "react";
 import BugCard from "@/components/BugCard";
 import RecentBugsSection from "@/components/RecentBugsSection";
 import BugDetailsModal from "@/components/BugDetailsModal";
+import {Bug} from "@/app/types/bug";
 
-interface Bug {
-  id: string;
-  name: string;
-  category: string;
-  priority: "low" | "medium" | "high" | "critical";
-  status: "todo" | "in-progress" | "review" | "done";
-  reporter: string;
-  createdAt: string;
-  history?: BugHistory[];
-}
-
-interface BugHistory {
-  id: string;
-  bugId: string;
-  timestamp: string;
-  actor: string;
-  actionType: string;
-  fieldName?: string;
-  oldValue?: string;
-  newValue?: string;
-  description: string;
-}
 
 // Placeholder data
 const PLACEHOLDER_BUGS: Bug[] = [

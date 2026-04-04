@@ -1,16 +1,5 @@
 "use client";
-
-interface BugHistory {
-  id: string;
-  bugId: string;
-  timestamp: string;
-  actor: string;
-  actionType: string;
-  fieldName?: string;
-  oldValue?: string;
-  newValue?: string;
-  description: string;
-}
+import { BugHistory } from "@/app/types/bugHistory";
 
 const ACTION_TYPE_CONFIG: Record<string, { color: string; label: string; bgColor: string }> = {
   created: { color: "text-purple-700", label: "Created", bgColor: "bg-purple-100" },

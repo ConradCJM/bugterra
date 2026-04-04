@@ -3,19 +3,14 @@
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 
+import { Attachment } from "@/app/types/attachment";
+
 interface FormErrors {
   title?: string;
   description?: string;
   category?: string;
   priority?: string;
   reporter?: string;
-}
-
-interface Attachment {
-  id: string;
-  file: File;
-  url: string;
-  type: "image" | "video";
 }
 
 interface FormData {

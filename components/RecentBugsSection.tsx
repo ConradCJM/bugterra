@@ -1,14 +1,7 @@
 "use client";
+import { Bug } from "@/app/types/bug";
+import { RecentBugsSectionProps } from "@/app/types/recentBugsSectionProps";
 
-interface Bug {
-  id: string;
-  name: string;
-  category: string;
-  priority: "low" | "medium" | "high" | "critical";
-  status: "todo" | "in-progress" | "review" | "done";
-  reporter: string;
-  createdAt: string;
-}
 
 const PRIORITY_BADGES = {
   low: "bg-green-100 text-green-800",
@@ -17,10 +10,7 @@ const PRIORITY_BADGES = {
   critical: "bg-red-100 text-red-800",
 };
 
-interface RecentBugsSectionProps {
-  bugs: Bug[];
-  onBugClick: (bug: Bug) => void;
-}
+
 
 export default function RecentBugsSection({ bugs, onBugClick }: RecentBugsSectionProps) {
   return (
