@@ -137,7 +137,11 @@ export default function SignupForm() {
     setIsLoading(true);
     setSubmitMessage({ type: "", text: "" });
 
-    const { error } = await signup(formData.email, formData.password);
+    const { error } = await signup(
+      formData.email,
+      formData.password,
+      formData.name,
+    );
 
     if (error) {
       setSubmitMessage({

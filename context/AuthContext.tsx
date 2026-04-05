@@ -12,6 +12,7 @@ interface AuthContextType {
   signup: (
     email: string,
     password: string,
+    name?: string,
   ) => Promise<{ error: string | null }>;
 }
 
@@ -82,11 +83,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const signup = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({ email, password });
+  const signup = async (email: string, password: string, name?: string) => {
+    const { data, error } = await supabase.auth.signUp({ email, password });
 
     if (error) {
       return { error: error.message };
+    }
+
+    // Create profile row if signup was successful
+    if (data.user) {
+      const { error: profileError } = await supabase.from("profiles").insert([
+        {
+          id: data.user.id,
+          name: name || "",
+          picture: null,
+        },
+      ]);
+
+      if (profileError) {
+        console.error("Failed to create profile:", profileError.message);
+        return { error: profileError.message };
+      }
     }
 
     return { error: null };
