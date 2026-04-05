@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
-
 interface FormData {
   name: string;
   email: string;
@@ -475,12 +474,7 @@ export default function SignupForm() {
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={!isFormValid || isLoading}
-            className={`w-full font-semibold py-2 px-4 rounded transition-colors mt-6 ${
-              isFormValid && !isLoading
-                ? "bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
-                : "bg-slate-300 text-slate-500 cursor-not-allowed"
-            }`}
+            className={`w-full font-semibold py-2 px-4 rounded transition-colors mt-6 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer`}
           >
             {isLoading ? "Creating Account..." : "Sign Up"}
           </button>
