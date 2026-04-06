@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
+import { findUserByEmail } from "@/app/actions/findUserByEmail";
 
 interface Team {
   id: string;
@@ -165,13 +166,8 @@ export default function TeamsPage() {
     if (!selectedTeam || !memberEmail.trim()) return;
 
     try {
-      // First, find the user by email
-      const { data: userData, error: userError } =
-        await supabase.auth.admin.listUsers();
-
-      if (userError) throw userError;
-
-      const user = userData.users.find((u) => u.email === memberEmail);
+      // Find the user by email using server action
+      const user = await findUserByEmail(memberEmail);
 
       if (!user) {
         alert("User not found");
